@@ -1,0 +1,6 @@
+name: CustomRecipes
+version: '${project.version}'
+main: com.doontcare.customrecipes.CustomRecipes
+api-version: 1.19
+authors: [ doontcare ]
+description: An easy-to-use interactive plugin for creating custom item recipes.
