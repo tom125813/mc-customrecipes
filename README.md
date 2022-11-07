@@ -21,17 +21,18 @@ recipes:
     material: netherite sword
     enchantments:
       sharpness: 10
-      unbreaking: 9
+      fire aspect: 2
     recipe:
       format:
-      - '#'
-      - '#'
-      - /
+      - ' # '
+      - ' # '
+      - ' / '
       materials:
         '#': red dye
-        /: redstone torch
+        '/': redstone torch
     flags:
-      hide_attributes: true
+      hide attributes: true
+      hide enchantments: false
   emerald_dagger:
     displayname: '&2Emerald Dagger'
     lore:
@@ -39,19 +40,20 @@ recipes:
     - '&aunderground &ndelicacies&a'
     - ''
     - '&a&lUNCOMMON'
-    material: mangrove propagule
+    material: wooden sword
     enchantments:
         sharpness: 4
     recipe:
       format:
-      - 'i'
-      - 'i'
-      - 'a'
+      - ' i '
+      - ' i '
+      - ' a '
       materials:
         'i': emerald
         'a': bamboo
     flags:
-      hide_attributes: true
+      hide attributes: true
+      hide enchantments: false
 ```
 
 >**Warning:** Currently in development and will likely change
