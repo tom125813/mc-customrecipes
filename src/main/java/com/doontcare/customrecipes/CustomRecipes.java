@@ -12,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class CustomRecipes extends JavaPlugin {
 
     // TODO: Add an update checker which alerts staff and console on join.
-    // TODO: E.g turn '#': red dye into red_dye
+    // TODO: Add multiple gui pages.
 
     private static CustomRecipes instance;
     private RecipeFileHandler fileHandler;
@@ -44,10 +44,6 @@ public final class CustomRecipes extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
-    }
-
-    private void registerRecipes() {
 
     }
 

@@ -1,9 +1,11 @@
 package com.doontcare.customrecipes.files;
 
 import com.doontcare.customrecipes.CustomRecipes;
+import com.doontcare.customrecipes.manager.ItemHandler;
 import com.doontcare.customrecipes.manager.RecipeManager;
 import com.doontcare.customrecipes.utils.UtilChat;
 import com.doontcare.customrecipes.utils.UtilEnchantments;
+import com.doontcare.customrecipes.utils.UtilFlags;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -66,10 +68,16 @@ public class RecipeFileHandler {
                 recipe.add("#");
                 recipe.add("/");
                 config.set("recipes.crimsonblade.material", "netherite_sword");
+                config.set("recipes.crimsonblade.enchantments.sharpness", "10");
+                config.set("recipes.crimsonblade.enchantments.fire aspect", "2");
+                config.set("recipes.crimsonblade.enchantments.unbreaking", "9");
                 config.set("recipes.crimsonblade.recipe.format", recipe);
                 config.set("recipes.crimsonblade.recipe.materials.#", "bedrock");
                 config.set("recipes.crimsonblade.recipe.materials./", "stick");
-                config.set("recipes.crimsonblade.flags.hide_attributes", true);
+                config.set("recipes.crimsonblade.flags.hide attributes", true);
+                config.set("recipes.crimsonblade.flags.hide enchantments", false);
+                config.set("recipes.crimsonblade.flags.unbreakable", false);
+
                 config.save(file);
             } catch (IOException e) {e.printStackTrace();}
         }
@@ -87,29 +95,9 @@ public class RecipeFileHandler {
             for (String identifier : config.getConfigurationSection("recipes").getKeys(false)) {
                 totalCount++;
                 try {
-                    ItemStack customItemStack = new ItemStack(Material.valueOf(config.getString("recipes." + identifier + ".material").toUpperCase().replaceAll(" ", "_")));
-                    ItemMeta customItemMeta = customItemStack.getItemMeta();
-                    customItemMeta.setDisplayName(UtilChat.translate(config.getString("recipes." + identifier + ".displayname")));
-                    List<String> customItemLore = new ArrayList<>();
-                    config.getStringList("recipes." + identifier + ".lore").forEach(l -> {
-                        customItemLore.add(UtilChat.translate(l));
-                    });
-                    customItemMeta.setLore(customItemLore);
+                    ItemStack customItemStack = ItemHandler.getCustomItem(identifier);
 
-                    if (config.getBoolean("recipes." + identifier + ".flags.hide_attributes"))
-                        customItemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-
-                    // ENCHANTS
-
-                    if (config.getConfigurationSection("recipes." + identifier + ".enchantments") != null) {
-                        for (String enchantIdentifier : config.getConfigurationSection("recipes." + identifier + ".enchantments").getKeys(false)) {
-                            customItemMeta.addEnchant(UtilEnchantments.getEnchantment(enchantIdentifier), config.getInt("recipes." + identifier + ".enchantments." + enchantIdentifier), true);
-                        }
-                    }
-
-
-                    customItemStack.setItemMeta(customItemMeta);
-
+                    // RECIPE
                     ShapedRecipe recipe = new ShapedRecipe(
                             new NamespacedKey(customRecipes, identifier),
                             customItemStack
@@ -121,6 +109,7 @@ public class RecipeFileHandler {
                             recipeData.get(2)
                     );
 
+
                     for (String recipeMaterials : config.getConfigurationSection("recipes." + identifier + ".recipe.materials").getKeys(false)) {
                         Character character = recipeMaterials.charAt(0);
                         Material material = Material.valueOf(config.getString("recipes." + identifier + ".recipe.materials." + character).toUpperCase().replaceAll(" ", "_"));
@@ -130,6 +119,7 @@ public class RecipeFileHandler {
                     customRecipes.getRecipeManager().addRecipe(recipe);
                     availableCount++;
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         }
