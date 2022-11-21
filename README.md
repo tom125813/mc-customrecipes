@@ -1,6 +1,8 @@
 # CustomRecipes
 An open-source minecraft plugin which allows admins to create custom items with ease. It comes with an additonal menu which displays all craftable custom items and displays their crafting format.
 
+> **Not finished**: Commands & API does not currently work - plugin functions correctly, however.
+
 ## Usage
 | Commands                                            | Functionality
 |-----------------------------------------------------|------------------------------------------------|
